@@ -29,8 +29,8 @@ import butterknife.ButterKnife;
 
 
 public class FragmentHome extends Fragment{
-	@Bind(R.id.root_line) LinearLayout rootLinearLayout;
-	@Bind(R.id.adslide) CustomerViewPage viewPage;
+	CustomerViewPage viewPage;
+	@Bind(R.id.hot_act) ListView hotList;
 
 
 	private List<View> slideData;
@@ -38,16 +38,39 @@ public class FragmentHome extends Fragment{
 	private View view;
 	private Context context;
 	private CommonAdapter<Act> mAdapter;
+	private View indexHeader;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.fragment_home, container, false);
+
 		ButterKnife.bind(this, view);
 		context = this.getActivity();
+		indexHeader = LayoutInflater.from(context).inflate(R.layout.news_header, null);
+		viewPage = (CustomerViewPage)indexHeader.findViewById(R.id.adslide);
+
+		init();
+
+		return view;
+	}
+
+	private void init()
+	{
 
 		initSlideData();
+
+		hotList.addHeaderView(indexHeader);
+		mDatas = new ArrayList<Act>();
+		mAdapter = new CommonAdapter<Act>(context, mDatas, R.layout.hot_item){
+			@Override
+			public void convert(ViewHolder helper, Act item) {
+				helper.setText(R.id.hot_activity_name,item.getName());
+				helper.setText(R.id.hot_activity_desc,item.getDesc());
+				helper.setImageByUrl(R.id.hot_activity_img,item.getImg());
+			}
+		};
+		hotList.setAdapter(mAdapter);
 		setListData();
-		return view;
 	}
 
 
@@ -74,21 +97,19 @@ public class FragmentHome extends Fragment{
 
 	private void setListData()
 	{
-		mDatas = new ArrayList<Act>();
+
 
 		for(int i=0;i<6;i++)
 		{
-
-
-
-			LinearLayout linearLayout = (LinearLayout)LayoutInflater.from(context).inflate(R.layout.hot_item,null);
-			((TextView)linearLayout.findViewById(R.id.hot_activity_desc)).setText("凤台棋牌室是比较大型的娱乐场所");
-			((TextView)linearLayout.findViewById(R.id.hot_activity_name)).setText("凤台棋牌室");
-			ImageView img = (ImageView)linearLayout.findViewById(R.id.hot_activity_img);
-			Picasso.with(context).load("http://pic.qiantucdn.com/58pic/16/73/95/63E58PICQh7_1024.jpg").into(img);
-
-			rootLinearLayout.addView(linearLayout);
+			Act act = new Act();
+			act.setImg("http://pic.qiantucdn.com/58pic/16/73/95/63E58PICQh7_1024.jpg");
+			act.setName("凤台棋牌室");
+			act.setDesc("凤台棋牌室是比较大型的娱乐场所");
+			mDatas.add(act);
 		}
+		mAdapter.notifyDataSetChanged();
+
+
 
 	}
 
