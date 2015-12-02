@@ -64,9 +64,9 @@ public class FragmentHome extends Fragment{
 		mAdapter = new CommonAdapter<Act>(context, mDatas, R.layout.hot_item){
 			@Override
 			public void convert(ViewHolder helper, Act item) {
-				helper.setText(R.id.hot_activity_name,item.getName());
-				helper.setText(R.id.hot_activity_desc,item.getDesc());
-				helper.setImageByUrl(R.id.hot_activity_img,item.getImg());
+				helper.setText(R.id.hot_activity_name,item.getTitle());
+				helper.setText(R.id.hot_activity_desc,item.getIntro());
+				helper.setImageByUrl(R.id.hot_activity_img,item.getPics());
 			}
 		};
 		hotList.setAdapter(mAdapter);
@@ -98,16 +98,16 @@ public class FragmentHome extends Fragment{
 	private void setListData()
 	{
 
-
-		for(int i=0;i<6;i++)
-		{
-			Act act = new Act();
-			act.setImg("http://pic.qiantucdn.com/58pic/16/73/95/63E58PICQh7_1024.jpg");
-			act.setName("凤台棋牌室");
-			act.setDesc("凤台棋牌室是比较大型的娱乐场所");
-			mDatas.add(act);
-		}
-		mAdapter.notifyDataSetChanged();
+//
+//		for(int i=0;i<6;i++)
+//		{
+//			Act act = new Act();
+//			act.setImg("http://pic.qiantucdn.com/58pic/16/73/95/63E58PICQh7_1024.jpg");
+//			act.setName("凤台棋牌室");
+//			act.setDesc("凤台棋牌室是比较大型的娱乐场所");
+//			mDatas.add(act);
+//		}
+//		mAdapter.notifyDataSetChanged();
 
 
 

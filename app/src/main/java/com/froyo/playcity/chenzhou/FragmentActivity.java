@@ -6,12 +6,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.froyo.playcity.chenzhou.api.Api;
 import com.froyo.playcity.chenzhou.bean.Act;
 import com.froyo.playcity.chenzhou.bean.News;
 import com.froyo.view.CommonAdapter;
@@ -23,6 +25,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.Callback;
+import retrofit.Response;
+import retrofit.Retrofit;
 
 public class FragmentActivity extends Fragment {
     @Bind(R.id.act)
@@ -55,9 +60,9 @@ public class FragmentActivity extends Fragment {
 
             @Override
             public void convert(ViewHolder helper, Act item) {
-                helper.setText(R.id.hot_activity_name, item.getName());
-                helper.setText(R.id.hot_activity_desc, item.getDesc());
-				helper.setImageByUrl(R.id.hot_activity_img, item.getImg());
+                helper.setText(R.id.hot_activity_name, item.getTitle());
+                helper.setText(R.id.hot_activity_desc, item.getSummary());
+				helper.setImageByUrl(R.id.hot_activity_img, item.getImg().getUrl());
             }
         };
         actList.setAdapter(mAdapter);
@@ -85,17 +90,24 @@ public class FragmentActivity extends Fragment {
     }
 
     private void setListData() {
+        Api api = new Api();
+        api.getModels(new Callback<List<Act>>() {
 
+            @Override
+            public void onResponse(Response<List<Act>> response) {
 
-        for (int i = 0; i < 6; i++) {
-            Act act = new Act();
-			act.setImg("http://pic.qiantucdn.com/58pic/16/73/95/63E58PICQh7_1024.jpg");
-            act.setName("凤台棋牌室");
-            act.setDesc("凤台棋牌室是比较大型的娱乐场所");
-            mDatas.add(act);
-        }
-        mAdapter.notifyDataSetChanged();
+                List<Act> acts = response.body();
+                mDatas.addAll(acts);
+                Log.d("tag", acts.toString());
+                mAdapter.notifyDataSetChanged();
+            }
 
+            @Override
+            public void onFailure(Throwable t) {
+
+                t.printStackTrace();
+            }
+        });
 
     }
 
