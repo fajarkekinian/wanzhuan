@@ -1,20 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#ffff"
+    android:layout_height="match_parent" >
     <ImageView
+        android:padding="@dimen/nomal_padding"
+        android:background="@drawable/transparent_radius_bg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/hot_activity_img"
+        android:src="@drawable/ttt"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+
         />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/hot_activity_img"
+        android:background="@drawable/mask" />
 <TextView
+    android:textColor="@color/black"
+    android:paddingLeft="@dimen/nomal_padding"
+    android:layout_marginTop="@dimen/nomal_padding"
+    android:layout_below="@+id/hot_activity_img"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/hot_activity_name"
+    android:textStyle="bold"
     />
     <TextView
+        android:paddingLeft="@dimen/nomal_padding"
+        android:layout_marginTop="@dimen/nomal_padding"
+        android:layout_below="@+id/hot_activity_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/hot_activity_desc"
+        android:singleLine="true"
+        android:ellipsize="end"
         />
-</LinearLayout>
+</RelativeLayout>

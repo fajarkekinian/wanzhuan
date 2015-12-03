@@ -4,14 +4,22 @@ package com.froyo.playcity.chenzhou.bean;
  * Created by Administrator on 2015/11/28.
  */
 public class Act {
-  public String id;
-    public String title;
-    public String address;
-    public String summary;
-    public String intro;
-    public String pics;
-    public int category;
-    public Img img;
+
+    private String id;
+    private String title;
+    private String address;
+    private String summary;
+    private String intro;
+    private String city;
+    private String type;
+
+
+    private ImgEntity img;
+    private String createdAt;
+    private String updatedAt;
+    private String actDate;
+    private String pics;
+    private String category;
 
     public void setId(String id) {
         this.id = id;
@@ -33,16 +41,36 @@ public class Act {
         this.intro = intro;
     }
 
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setImg(ImgEntity img) {
+        this.img = img;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public void setActDate(String actDate) {
+        this.actDate = actDate;
+    }
+
     public void setPics(String pics) {
         this.pics = pics;
     }
 
-    public void setCategory(int category) {
+    public void setCategory(String category) {
         this.category = category;
-    }
-
-    public void setImg(Img img) {
-        this.img = img;
     }
 
     public String getId() {
@@ -65,22 +93,42 @@ public class Act {
         return intro;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public ImgEntity getImg() {
+        return img;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public String getActDate() {
+        return actDate;
+    }
+
     public String getPics() {
         return pics;
     }
 
-    public int getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public Img getImg() {
-        return img;
-    }
-
-    public class Img{
-        public String url;
-        public String name;
-        public String id;
+    public static class ImgEntity {
+        private String url;
+        private String name;
+        private String id;
 
         public void setUrl(String url) {
             this.url = url;

@@ -36,4 +36,7 @@
     <string name="wash">保洁</string>
     <string name="worker">钟点工</string>
     <string name="news">新闻</string>
+    <string name="summery">摘要</string>
+    <string name="share">分享</string>
+    <string name="colect">收藏</string>
 </resources>

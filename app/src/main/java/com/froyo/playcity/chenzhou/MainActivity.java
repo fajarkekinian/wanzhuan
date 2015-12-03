@@ -8,9 +8,6 @@ import android.widget.ImageView;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
-import butterknife.BindString;
-import butterknife.ButterKnife;
-
 /**
  *
  * @author yechao

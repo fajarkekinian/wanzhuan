@@ -1,12 +1,15 @@
 package com.froyo.playcity.chenzhou;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -14,6 +17,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.froyo.playcity.chenzhou.api.Api;
 import com.froyo.playcity.chenzhou.bean.Act;
 import com.froyo.view.CommonAdapter;
 import com.froyo.view.CustomerViewPage;
@@ -26,6 +30,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.Callback;
+import retrofit.Response;
 
 
 public class FragmentHome extends Fragment{
@@ -65,15 +71,28 @@ public class FragmentHome extends Fragment{
 			@Override
 			public void convert(ViewHolder helper, Act item) {
 				helper.setText(R.id.hot_activity_name,item.getTitle());
-				helper.setText(R.id.hot_activity_desc,item.getIntro());
-				helper.setImageByUrl(R.id.hot_activity_img,item.getPics());
+				helper.setText(R.id.hot_activity_desc,item.getSummary());
+				helper.setImageByUrl(R.id.hot_activity_img,item.getImg().getUrl());
 			}
 		};
 		hotList.setAdapter(mAdapter);
+		bindAction();
 		setListData();
 	}
 
-
+	private void  bindAction()
+	{
+		hotList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+				Act act = mDatas.get(i-1);
+				Intent intent = new Intent();
+				intent.setClass(context,ActActivity.class);
+				intent.putExtra("id",act.getId());
+				context.startActivity(intent);
+			}
+		});
+	}
 
 	private void initSlideData() {
 		slideData = new ArrayList<>();
@@ -98,16 +117,24 @@ public class FragmentHome extends Fragment{
 	private void setListData()
 	{
 
-//
-//		for(int i=0;i<6;i++)
-//		{
-//			Act act = new Act();
-//			act.setImg("http://pic.qiantucdn.com/58pic/16/73/95/63E58PICQh7_1024.jpg");
-//			act.setName("凤台棋牌室");
-//			act.setDesc("凤台棋牌室是比较大型的娱乐场所");
-//			mDatas.add(act);
-//		}
-//		mAdapter.notifyDataSetChanged();
+		Api api = new Api();
+		api.getModels(new Callback<List<Act>>() {
+
+			@Override
+			public void onResponse(Response<List<Act>> response) {
+
+				List<Act> acts = response.body();
+				mDatas.addAll(acts);
+				Log.d("tag", acts.toString());
+				mAdapter.notifyDataSetChanged();
+			}
+
+			@Override
+			public void onFailure(Throwable t) {
+
+				t.printStackTrace();
+			}
+		});
 
 
 

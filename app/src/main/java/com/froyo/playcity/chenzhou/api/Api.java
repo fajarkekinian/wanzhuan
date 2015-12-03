@@ -37,7 +37,12 @@ public class Api {
 
     public void getNewsItem(String id, Callback<News> apiListern)
     {
-        Call<News> call  = apiService.getNews(header[0], header[1],id);
+        Call<News> call  = apiService.getNews(header[0], header[1], id);
+        call.enqueue(apiListern);
+    }
+    public void geActItem(String id, Callback<Act> apiListern)
+    {
+        Call<Act> call  = apiService.getAct(header[0], header[1], id);
         call.enqueue(apiListern);
     }
 }

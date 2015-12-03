@@ -1,5 +1,6 @@
 package com.froyo.playcity.chenzhou;
 
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.froyo.playcity.chenzhou.api.Api;
+import com.froyo.playcity.chenzhou.bean.Act;
 import com.froyo.playcity.chenzhou.bean.News;
 
 import butterknife.Bind;
@@ -19,30 +21,28 @@ import retrofit.Response;
 /**
  * Created by Administrator on 2015/12/3.
  */
-public class NewsActivity extends Activity {
-    @Bind(R.id.title)
-    TextView title;
-
-    @Bind(R.id.from)
-    TextView from;
+public class ActActivity extends Activity {
+    @Bind(R.id.name)
+    TextView name;
 
     @Bind(R.id.date)
     TextView date;
+    @Bind(R.id.address)
+    TextView address;
+
     @Bind(R.id.content)
-    WebView content;
+    TextView content;
 
     @Bind(R.id.back)
     ImageView back;
 
-    @Bind(R.id.summery)
-    TextView summery;
 
-    private News news;
+    private Act act;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news);
+        setContentView(R.layout.activity_act);
         ButterKnife.bind(this);
         bindAction();
         getData();
@@ -61,11 +61,11 @@ public class NewsActivity extends Activity {
         Intent intent = this.getIntent();
         String id = intent.getStringExtra("id");
         Api api = new Api();
-        api.getNewsItem(id,new Callback<News>(){
+        api.geActItem(id, new Callback<Act>() {
 
             @Override
-            public void onResponse(Response<News> response) {
-                news = response.body();
+            public void onResponse(Response<Act> response) {
+                act = response.body();
                 setData();
             }
 
@@ -77,13 +77,9 @@ public class NewsActivity extends Activity {
     }
 
     private void setData(){
-        title.setText(news.getTitle());
-        from.setText(news.getFrom());
-        date.setText(news.getDate());
-        summery.setText(news.getSummary());
-        final String mimeType = "text/html";
-        final String encoding = "UTF-8";
-        String text = "<body style=\"color:#515155;font-size:14px;background-color:transparent;line-height:2em;text-align:justify;\" >"+news.getContent()+"</body>";
-        content.loadDataWithBaseURL("", text, mimeType, encoding, "");
+        name.setText(act.getTitle());
+        date.setText(act.getActDate());
+        content.setText(act.getIntro());
+        address.setText(act.getAddress());
     }
 }

@@ -23,6 +23,10 @@
             android:name=".NewsActivity"
             android:label="@string/news" >
         </activity>
+        <activity
+            android:name=".ActActivity"
+            android:label="@string/news" >
+        </activity>
     </application>
 
 </manifest>

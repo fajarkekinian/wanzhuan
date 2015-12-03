@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.froyo.lib.PicassoCirclTransform;
 import com.squareup.picasso.Picasso;
 
 
@@ -127,6 +128,14 @@ public class ViewHolder
 		Picasso.with(context).load(url).into((ImageView) getView(viewId));
 		return this;
 	}
+
+	public ViewHolder setRadiusImageByUrl(int viewId, String url)
+	{
+		Picasso.with(context).load(url).transform(new PicassoCirclTransform()).into((ImageView) getView(viewId));
+		return this;
+	}
+
+
 
 	public int getPosition()
 	{

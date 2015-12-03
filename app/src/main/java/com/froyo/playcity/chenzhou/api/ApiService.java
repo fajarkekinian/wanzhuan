@@ -25,4 +25,7 @@ public interface ApiService {
 
     @GET("/mcm/api/news/{id}")
     Call<News> getNews(@Header("X-APICloud-AppId") String appId,@Header("X-APICloud-AppKey") String appKey,@Path("id") String id);
+
+    @GET("/mcm/api/activity/{id}")
+    Call<Act> getAct(@Header("X-APICloud-AppId") String appId,@Header("X-APICloud-AppKey") String appKey,@Path("id") String id);
 }
