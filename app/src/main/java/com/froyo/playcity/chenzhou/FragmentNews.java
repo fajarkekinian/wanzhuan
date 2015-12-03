@@ -1,15 +1,20 @@
 package com.froyo.playcity.chenzhou;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.froyo.playcity.chenzhou.api.Api;
 import com.froyo.playcity.chenzhou.bean.Act;
 import com.froyo.playcity.chenzhou.bean.News;
 import com.froyo.view.CommonAdapter;
@@ -21,6 +26,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit.Callback;
+import retrofit.Response;
 
 public class FragmentNews extends Fragment {
 	@Bind(R.id.news)
@@ -53,13 +60,28 @@ public class FragmentNews extends Fragment {
 
 			@Override
 			public void convert(ViewHolder helper, News item) {
-				helper.setText(R.id.name,item.getName());
-				helper.setText(R.id.desc,item.getDesc());
-//				helper.setImageByUrl(R.id.img,item.getImg());
+				helper.setText(R.id.name, item.getTitle());
+				helper.setText(R.id.desc, item.getSummary());
+				helper.setImageByUrl(R.id.img,item.getImg().getUrl());
 			}
 		};
 		newsList.setAdapter(mAdapter);
+		bindAction();
 		setListData();
+	}
+
+	private void bindAction()
+	{
+		newsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+				News news = mDatas.get(i-1);
+				Intent intent = new Intent();
+				intent.setClass(context, NewsActivity.class);
+				intent.putExtra("id",news.getId());
+				context.startActivity(intent);
+			}
+		});
 	}
 
 	private void initSlideData() {
@@ -84,17 +106,23 @@ public class FragmentNews extends Fragment {
 
 	private void setListData()
 	{
+		Api api = new Api();
+		api.getNews(new Callback<List<News>>() {
 
+			@Override
+			public void onResponse(Response<List<News>> response) {
+				List<News> news = response.body();
+				mDatas.addAll(news);
+				Log.d("tag", news.toString());
+				mAdapter.notifyDataSetChanged();
+			}
 
-		for(int i=0;i<6;i++)
-		{
-			News news = new News();
-//			news.setImg("http://pic.qiantucdn.com/58pic/16/73/95/63E58PICQh7_1024.jpg");
-			news.setName("凤台棋牌室");
-			news.setDesc("凤台棋牌室是比较大型的娱乐场所");
-			mDatas.add(news);
-		}
-		mAdapter.notifyDataSetChanged();
+			@Override
+			public void onFailure(Throwable t) {
+				t.printStackTrace();
+			}
+		});
+
 
 
 

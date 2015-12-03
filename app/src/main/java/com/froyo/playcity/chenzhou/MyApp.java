@@ -24,7 +24,7 @@ public class MyApp extends Application {
     {
         if( apiCloud == null )
         {
-            apiCloud = new ApiCloud("","");
+            apiCloud = new ApiCloud("A6966833672975","2E50D9D3-9063-E9B5-F3B9-065418CF2432");
         }
         return apiCloud;
     }

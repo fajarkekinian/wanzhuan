@@ -6,4 +6,7 @@
     <dimen name="title_bar_padding">16dp</dimen>
     <dimen name="title_font_size">20dp</dimen>
     <dimen name="nomal_padding">8dp</dimen>
+    <dimen name="samm_font">12dp</dimen>
+    <dimen name="normal_font">16dp</dimen>
+    <dimen name="large_font">20dp</dimen>
 </resources>
