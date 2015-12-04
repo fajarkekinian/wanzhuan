@@ -30,5 +30,6 @@
     android:layout_height="wrap_content">
 
 </ListView>
+    <include layout="@layout/no_data" />
 
 </LinearLayout>

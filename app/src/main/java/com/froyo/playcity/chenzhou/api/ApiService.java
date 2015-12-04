@@ -2,6 +2,7 @@ package com.froyo.playcity.chenzhou.api;
 
 import com.froyo.playcity.chenzhou.MyApp;
 import com.froyo.playcity.chenzhou.bean.Act;
+import com.froyo.playcity.chenzhou.bean.Banner;
 import com.froyo.playcity.chenzhou.bean.News;
 
 import java.util.List;
@@ -28,4 +29,7 @@ public interface ApiService {
 
     @GET("/mcm/api/activity/{id}")
     Call<Act> getAct(@Header("X-APICloud-AppId") String appId,@Header("X-APICloud-AppKey") String appKey,@Path("id") String id);
+
+    @GET("/mcm/api/banner")
+    Call<List<Banner>> getBanner(@Header("X-APICloud-AppId") String appId,@Header("X-APICloud-AppKey") String appKey);
 }

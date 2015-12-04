@@ -14,11 +14,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.froyo.playcity.chenzhou.api.Api;
 import com.froyo.playcity.chenzhou.bean.Act;
+import com.froyo.playcity.chenzhou.bean.Banner;
 import com.froyo.view.CommonAdapter;
 import com.froyo.view.CustomerViewPage;
 import com.froyo.view.ViewHolder;
@@ -30,6 +32,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.Response;
 
@@ -37,6 +40,7 @@ import retrofit.Response;
 public class FragmentHome extends Fragment{
 	CustomerViewPage viewPage;
 	@Bind(R.id.hot_act) ListView hotList;
+	@Bind(R.id.no_data) TextView emptyView;
 
 
 	private List<View> slideData;
@@ -45,25 +49,30 @@ public class FragmentHome extends Fragment{
 	private Context context;
 	private CommonAdapter<Act> mAdapter;
 	private View indexHeader;
+	private Api api;
+	private MaterialDialog mMaterialDialog;
+
+	private int netWork = 0;
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		view = inflater.inflate(R.layout.fragment_home, container, false);
+		if(view == null)
+		{
+			view = inflater.inflate(R.layout.fragment_home, container, false);
+			ButterKnife.bind(this, view);
+			context = this.getActivity();
+			indexHeader = LayoutInflater.from(context).inflate(R.layout.news_header, null);
+			viewPage = (CustomerViewPage)indexHeader.findViewById(R.id.adslide);
 
-		ButterKnife.bind(this, view);
-		context = this.getActivity();
-		indexHeader = LayoutInflater.from(context).inflate(R.layout.news_header, null);
-		viewPage = (CustomerViewPage)indexHeader.findViewById(R.id.adslide);
-
-		init();
-
+			init();
+		}
 		return view;
 	}
 
 	private void init()
 	{
-
-		initSlideData();
+		api = new Api();
 
 		hotList.addHeaderView(indexHeader);
 		mDatas = new ArrayList<Act>();
@@ -76,10 +85,33 @@ public class FragmentHome extends Fragment{
 			}
 		};
 		hotList.setAdapter(mAdapter);
+		hotList.setEmptyView(emptyView);
+
+		showToast();
 		bindAction();
-		setListData();
+		initSlideData();
+		setData();
 	}
 
+	private void showToast()
+	{
+		mMaterialDialog = new MaterialDialog(context);
+		View view = LayoutInflater.from(context)
+				.inflate(R.layout.progress_bar,
+						null);
+		((TextView)view.findViewById(R.id.toast_msg)).setText(context.getResources().getString(R.string.waite_to_load));
+		mMaterialDialog.setView(view).show();
+	}
+
+	private void closeToast()
+	{
+		if(netWork>0)
+		{
+			return;
+		}
+
+		mMaterialDialog.dismiss();
+	}
 	private void  bindAction()
 	{
 		hotList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -95,29 +127,39 @@ public class FragmentHome extends Fragment{
 	}
 
 	private void initSlideData() {
-		slideData = new ArrayList<>();
-		ImageView imageView1 = new ImageView(context);
-		ImageView imageView2 = new ImageView(context);
-		ImageView imageView3 = new ImageView(context);
-		ImageView imageView4 = new ImageView(context);
-		ImageView imageView5 = new ImageView(context);
-		imageView1.setBackgroundColor(Color.parseColor("#123456"));
-		slideData.add(imageView1);
-		imageView2.setBackgroundColor(Color.parseColor("#145826"));
-		slideData.add(imageView2);
-		imageView3.setBackgroundColor(Color.parseColor("#874592"));
-		slideData.add(imageView3);
-		imageView4.setBackgroundColor(Color.parseColor("#658415"));
-		slideData.add(imageView4);
-		imageView5.setBackgroundColor(Color.parseColor("#845163"));
-		slideData.add(imageView5);
-		viewPage.setViewPageViews(slideData);
+		netWork++;
+		api.getBanners(new Callback<List<Banner>>() {
+			@Override
+			public void onResponse(Response<List<Banner>> response) {
+				slideData = new ArrayList<>();
+				for(Banner banner:response.body()){
+					RelativeLayout bannerLine =  (RelativeLayout)LayoutInflater.from(context).inflate(R.layout.banner_slides, null);
+					Picasso.with(context).load(banner.getImg().getUrl()).into((ImageView)bannerLine.findViewById(R.id.img));
+					((TextView)bannerLine.findViewById(R.id.name)).setText(banner.getName());
+					slideData.add(bannerLine);
+				}
+				viewPage.setViewPageViews(slideData);
+				netWork--;
+
+				closeToast();
+			}
+
+			@Override
+			public void onFailure(Throwable t) {
+				netWork--;
+				slideData = new ArrayList<>();
+				LinearLayout bannerLine =  (LinearLayout)LayoutInflater.from(context).inflate(R.layout.no_data, null);
+				slideData.add(bannerLine);
+				viewPage.setViewPageViews(slideData);
+				closeToast();
+			}
+		});
+
 	}
 
-	private void setListData()
+	private void setData()
 	{
-
-		Api api = new Api();
+		netWork++;
 		api.getModels(new Callback<List<Act>>() {
 
 			@Override
@@ -127,12 +169,16 @@ public class FragmentHome extends Fragment{
 				mDatas.addAll(acts);
 				Log.d("tag", acts.toString());
 				mAdapter.notifyDataSetChanged();
+				netWork--;
+				closeToast();
 			}
 
 			@Override
 			public void onFailure(Throwable t) {
 
 				t.printStackTrace();
+				netWork--;
+				closeToast();
 			}
 		});
 

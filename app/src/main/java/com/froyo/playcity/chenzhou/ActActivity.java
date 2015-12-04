@@ -4,6 +4,7 @@ package com.froyo.playcity.chenzhou;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import com.froyo.playcity.chenzhou.bean.News;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.Response;
 
@@ -39,12 +41,15 @@ public class ActActivity extends Activity {
 
     private Act act;
 
+    private MaterialDialog mMaterialDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act);
         ButterKnife.bind(this);
         bindAction();
+
         getData();
     }
 
@@ -58,6 +63,7 @@ public class ActActivity extends Activity {
         });
     }
     private void getData(){
+        showToast();
         Intent intent = this.getIntent();
         String id = intent.getStringExtra("id");
         Api api = new Api();
@@ -67,11 +73,12 @@ public class ActActivity extends Activity {
             public void onResponse(Response<Act> response) {
                 act = response.body();
                 setData();
+                closeToast();
             }
 
             @Override
             public void onFailure(Throwable t) {
-
+                closeToast();
             }
         });
     }
@@ -81,5 +88,20 @@ public class ActActivity extends Activity {
         date.setText(act.getActDate());
         content.setText(act.getIntro());
         address.setText(act.getAddress());
+    }
+
+    private void showToast()
+    {
+        mMaterialDialog = new MaterialDialog(this);
+        View view = LayoutInflater.from(this)
+                .inflate(R.layout.progress_bar,
+                        null);
+        ((TextView)view.findViewById(R.id.toast_msg)).setText(getResources().getString(R.string.waite_to_load));
+        mMaterialDialog.setView(view).show();
+    }
+
+    private void closeToast()
+    {
+        mMaterialDialog.dismiss();
     }
 }

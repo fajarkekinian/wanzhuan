@@ -2,6 +2,7 @@ package com.froyo.playcity.chenzhou.api;
 
 import com.froyo.playcity.chenzhou.MyApp;
 import com.froyo.playcity.chenzhou.bean.Act;
+import com.froyo.playcity.chenzhou.bean.Banner;
 import com.froyo.playcity.chenzhou.bean.News;
 
 import java.io.UnsupportedEncodingException;
@@ -43,6 +44,12 @@ public class Api {
     public void geActItem(String id, Callback<Act> apiListern)
     {
         Call<Act> call  = apiService.getAct(header[0], header[1], id);
+        call.enqueue(apiListern);
+    }
+
+    public void getBanners( Callback<List<Banner>> apiListern)
+    {
+        Call<List<Banner>> call  = apiService.getBanner(header[0], header[1]);
         call.enqueue(apiListern);
     }
 }
