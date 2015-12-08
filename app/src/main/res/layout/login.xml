@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:background="@color/lightblue"
+        android:paddingBottom="@dimen/title_bar_padding"
+        android:paddingTop="@dimen/title_bar_padding">
+        <ImageView
+            android:paddingLeft="@dimen/nomal_padding"
+            android:paddingRight="@dimen/nomal_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/arr_l"
+            android:id="@+id/back"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:text="@string/login"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_font_size" />
+    </RelativeLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_margin="@dimen/nomal_padding"
+            android:padding="@dimen/nomal_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/user_name"
+            android:background="@drawable/edit_text_bg"
+            />
+        <EditText
+            android:layout_margin="@dimen/nomal_padding"
+            android:padding="@dimen/nomal_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/user_password"
+            android:background="@drawable/edit_text_bg"
+            />
+
+        <Button
+            android:background="@drawable/blue_radius_bg"
+            android:layout_margin="@dimen/nomal_padding"
+            android:padding="@dimen/nomal_padding"
+            android:text="@string/login"
+            android:layout_width="match_parent"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:password="true"
+            android:textStyle="italic"
+            android:gravity="center"
+            android:text="@string/register_tips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

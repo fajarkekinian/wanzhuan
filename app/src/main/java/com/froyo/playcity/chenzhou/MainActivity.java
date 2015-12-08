@@ -1,12 +1,16 @@
 package com.froyo.playcity.chenzhou;
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  *
@@ -16,11 +20,12 @@ import android.widget.TextView;
 public class MainActivity extends android.support.v4.app.FragmentActivity {
     private Resources res = null;
     private FragmentTabHost mTabHost;
+    private Context context;
 
     private LayoutInflater layoutInflater;
 
 
-    private Class fragmentArray[] = { FragmentHome.class,
+    private Class []fragClass = { FragmentHome.class,
             FragmentNews.class, FragmentLife.class, FragmentActivity.class,
             FragmentUser.class };
 
@@ -37,7 +42,7 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         res = this.getResources();
-
+        context = this;
         mTextviewArray = new String[]{ res.getString(R.string.tab_home),
                 res.getString(R.string.tab_news),
                 res.getString(R.string.tab_life),
@@ -54,16 +59,17 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         mTabHost.getTabWidget().setDividerDrawable(android.R.color.transparent);//remove divider
 
-        int count = fragmentArray.length;
+        int count = fragClass.length;
 
         for (int i = 0; i < count; i++) {
 
             TabSpec tabSpec = mTabHost.newTabSpec(mTextviewArray[i])
                     .setIndicator(getTabItemView(i));
-            Class frag = fragmentArray[i];
+            Class frag = fragClass[i];
             mTabHost.addTab(tabSpec, frag, null);
 
         }
+
     }
 
     private View getTabItemView(int index) {
