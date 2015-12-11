@@ -5,21 +5,36 @@ package com.froyo.playcity.chenzhou.bean;
  */
 public class Act {
 
+
+    /**
+     * id : 5667ce9e738c60ec14793969
+     * title : 中和澳亚
+     * date : 2015-12-09T06:47:58.918Z
+     * address : 冥王星市暂无商家地址
+     * summary : 霸王餐：价值109元的比夫家人澳大利亚安格斯牛腩块1000g1个免费赠送。
+     * intro :
+     * city : chenzhou
+     * type :
+     * picture :
+     * img : http://p1.meituan.net/366.220/deal/ed4ac9f73049c664656c45206c59fae1338173.jpg
+     * source : http://i.meituan.com/deal/33010616.html
+     * createdAt : 2015-12-09T06:47:58.918Z
+     * updatedAt : 2015-12-09T06:47:59.556Z
+     */
+
     private String id;
     private String title;
+    private String date;
     private String address;
     private String summary;
     private String intro;
     private String city;
     private String type;
-
-
-    private ImgEntity img;
+    private String picture;
+    private String img;
+    private String source;
     private String createdAt;
     private String updatedAt;
-    private String actDate;
-    private String pics;
-    private String category;
 
     public void setId(String id) {
         this.id = id;
@@ -27,6 +42,10 @@ public class Act {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public void setAddress(String address) {
@@ -49,8 +68,16 @@ public class Act {
         this.type = type;
     }
 
-    public void setImg(ImgEntity img) {
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public void setImg(String img) {
         this.img = img;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
     public void setCreatedAt(String createdAt) {
@@ -61,24 +88,16 @@ public class Act {
         this.updatedAt = updatedAt;
     }
 
-    public void setActDate(String actDate) {
-        this.actDate = actDate;
-    }
-
-    public void setPics(String pics) {
-        this.pics = pics;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
     public String getId() {
         return id;
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public String getAddress() {
@@ -101,8 +120,16 @@ public class Act {
         return type;
     }
 
-    public ImgEntity getImg() {
+    public String getPicture() {
+        return picture;
+    }
+
+    public String getImg() {
         return img;
+    }
+
+    public String getSource() {
+        return source;
     }
 
     public String getCreatedAt() {
@@ -111,47 +138,5 @@ public class Act {
 
     public String getUpdatedAt() {
         return updatedAt;
-    }
-
-    public String getActDate() {
-        return actDate;
-    }
-
-    public String getPics() {
-        return pics;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public static class ImgEntity {
-        private String url;
-        private String name;
-        private String id;
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getId() {
-            return id;
-        }
     }
 }

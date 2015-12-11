@@ -128,7 +128,11 @@ public class ViewHolder
 		Picasso.with(context).load(url).into((ImageView) getView(viewId));
 		return this;
 	}
-
+	public ViewHolder setImageByUrl(int viewId, String url, int width, int height)
+	{
+		Picasso.with(context).load(url).resize(width,height).into((ImageView) getView(viewId));
+		return this;
+	}
 	public ViewHolder setRadiusImageByUrl(int viewId, String url)
 	{
 		Picasso.with(context).load(url).transform(new PicassoCirclTransform()).into((ImageView) getView(viewId));

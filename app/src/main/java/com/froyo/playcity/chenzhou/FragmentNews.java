@@ -74,7 +74,7 @@ public class FragmentNews extends Fragment {
 			public void convert(ViewHolder helper, News item) {
 				helper.setText(R.id.name, item.getTitle());
 				helper.setText(R.id.desc, item.getSummary());
-				helper.setImageByUrl(R.id.img,item.getImg().getUrl());
+				helper.setImageByUrl(R.id.img, item.getImg(),150,150);
 			}
 		};
 		newsList.setAdapter(mAdapter);

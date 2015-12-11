@@ -81,7 +81,7 @@ public class FragmentHome extends Fragment{
 			public void convert(ViewHolder helper, Act item) {
 				helper.setText(R.id.hot_activity_name,item.getTitle());
 				helper.setText(R.id.hot_activity_desc,item.getSummary());
-				helper.setImageByUrl(R.id.hot_activity_img,item.getImg().getUrl());
+				helper.setImageByUrl(R.id.hot_activity_img,item.getImg());
 			}
 		};
 		hotList.setAdapter(mAdapter);

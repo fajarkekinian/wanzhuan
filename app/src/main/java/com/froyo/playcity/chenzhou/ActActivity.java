@@ -4,6 +4,7 @@ package com.froyo.playcity.chenzhou;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
@@ -33,7 +34,7 @@ public class ActActivity extends Activity {
     TextView address;
 
     @Bind(R.id.content)
-    TextView content;
+    WebView content;
 
     @Bind(R.id.back)
     ImageView back;
@@ -85,8 +86,29 @@ public class ActActivity extends Activity {
 
     private void setData(){
         name.setText(act.getTitle());
-        date.setText(act.getActDate());
-        content.setText(act.getIntro());
+
+
+        final String mimeType = "text/html";
+        final String encoding = "UTF-8";
+        String text = "<body style=\"color:#515155;font-size:14px;background-color:transparent;line-height:2em;text-align:justify;\" >    <style type=\"text/css\">\n" +
+                "        dd{\n" +
+                "            margin-left:0.5em;\n" +
+                "            padding: 0px;\n" +
+                "        }\n" +
+                "        ul{\n" +
+                "            padding-left: 0px;\n" +
+                "            margin-left:0px;\n" +
+                "        }\n" +
+                "        .detail-title,.dd-padding{\n" +
+                "            margin-left: 0px;\n" +
+                "            padding-left: 0px;\n" +
+                "        }\n" +
+                "        .detail-title dd,.dd-padding dd{\n" +
+                "            margin-left: 0px;\n" +
+                "            padding-left: 0px;\n" +
+                "        }\n" +
+                "    </style>"+act.getIntro()+"</body>";
+        content.loadDataWithBaseURL("", text, mimeType, encoding, "");
         address.setText(act.getAddress());
     }
 

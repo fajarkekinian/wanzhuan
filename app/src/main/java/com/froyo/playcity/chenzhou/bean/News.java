@@ -1,6 +1,7 @@
 package com.froyo.playcity.chenzhou.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by Administrator on 2015/11/30.
@@ -14,10 +15,10 @@ public class News implements Serializable {
     private String from;
     private Object source;
     private String date;
-    private String pics;
+    private ArrayList<PicEntity> pics;
 
 
-    private ImgEntity img;
+    private String img;
     private String createdAt;
     private String updatedAt;
 
@@ -53,11 +54,11 @@ public class News implements Serializable {
         this.date = date;
     }
 
-    public void setPics(String pics) {
+    public void setPics(ArrayList<PicEntity> pics) {
         this.pics = pics;
     }
 
-    public void setImg(ImgEntity img) {
+    public void setImg(String img) {
         this.img = img;
     }
 
@@ -101,11 +102,11 @@ public class News implements Serializable {
         return date;
     }
 
-    public String getPics() {
+    public ArrayList<PicEntity> getPics() {
         return pics;
     }
 
-    public ImgEntity getImg() {
+    public String getImg() {
         return img;
     }
 
@@ -117,33 +118,20 @@ public class News implements Serializable {
         return updatedAt;
     }
 
-    public static class ImgEntity {
+    public static class PicEntity {
         private String url;
-        private String name;
-        private String id;
+
 
         public void setUrl(String url) {
             this.url = url;
         }
 
-        public void setName(String name) {
-            this.name = name;
-        }
 
-        public void setId(String id) {
-            this.id = id;
-        }
 
         public String getUrl() {
             return url;
         }
 
-        public String getName() {
-            return name;
-        }
 
-        public String getId() {
-            return id;
-        }
     }
 }
