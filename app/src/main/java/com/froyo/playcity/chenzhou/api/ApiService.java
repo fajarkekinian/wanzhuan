@@ -4,6 +4,7 @@ import com.froyo.playcity.chenzhou.MyApp;
 import com.froyo.playcity.chenzhou.bean.Act;
 import com.froyo.playcity.chenzhou.bean.Banner;
 import com.froyo.playcity.chenzhou.bean.News;
+import com.froyo.playcity.chenzhou.bean.Pio;
 
 import java.util.List;
 
@@ -32,4 +33,6 @@ public interface ApiService {
 
     @GET("/mcm/api/banner")
     Call<List<Banner>> getBanner(@Header("X-APICloud-AppId") String appId,@Header("X-APICloud-AppKey") String appKey);
+    @GET("/mcm/api/local_server")
+    Call<List<Pio>> getPios(@Header("X-APICloud-AppId") String appId,@Header("X-APICloud-AppKey") String appKey, @Query(value="filter",encoded = true ) String filter);
 }

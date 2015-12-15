@@ -46,5 +46,6 @@
     <string name="user_name">用户名</string>
     <string name="user_password">用户密码</string>
     <string name="register_tips"><u>没账号，戳这里注册</u></string>
+    <string name="title_activity_local_poi">LocalPoiActivity</string>
 
 </resources>

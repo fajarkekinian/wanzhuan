@@ -11,7 +11,6 @@
     android:orientation="vertical" >
     <RelativeLayout
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content"
         android:background="@color/lightblue"
         android:paddingBottom="@dimen/title_bar_padding"
@@ -60,7 +59,9 @@
                 android:background="@drawable/home_button_border"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="@dimen/nomal_padding">
+                android:padding="@dimen/nomal_padding"
+                android:tag="restaurants"
+                android:id="@+id/restaurants">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -81,7 +82,9 @@
                 android:background="@drawable/home_button_border"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="@dimen/nomal_padding">
+                android:padding="@dimen/nomal_padding"
+                android:tag="agritainmen"
+                android:id="@+id/agritainmen">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -103,6 +106,8 @@
                 android:background="@drawable/home_button_border"
                 android:gravity="center"
                 android:orientation="vertical"
+                android:id="@+id/hotel"
+                android:tag="hotel"
                 android:padding="@dimen/nomal_padding">
 
                 <ImageView
@@ -125,6 +130,8 @@
                 android:background="@drawable/home_button_border"
                 android:gravity="center"
                 android:orientation="vertical"
+                android:id="@+id/movie"
+                android:tag="movie"
                 android:padding="@dimen/nomal_padding">
 
                 <ImageView
@@ -154,6 +161,8 @@
                 android:background="@drawable/home_button_border"
                 android:gravity="center"
                 android:orientation="vertical"
+                android:id="@+id/ktv"
+                android:tag="ktv"
                 android:padding="@dimen/nomal_padding">
 
                 <ImageView
@@ -175,7 +184,9 @@
                 android:background="@drawable/home_button_border"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="@dimen/nomal_padding">
+                android:padding="@dimen/nomal_padding"
+                android:tag="cosmetology"
+                android:id="@+id/cosmetology">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -221,7 +232,9 @@
                 android:background="@drawable/home_button_border"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="@dimen/nomal_padding">
+                android:padding="@dimen/nomal_padding"
+                android:tag="tea"
+                android:id="@+id/tea">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -275,7 +288,9 @@
                 android:background="@drawable/home_button_border"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="@dimen/nomal_padding">
+                android:padding="@dimen/nomal_padding"
+                android:tag="shop"
+                android:id="@+id/shop">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -298,7 +313,9 @@
                 android:background="@drawable/home_button_border"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="@dimen/nomal_padding">
+                android:padding="@dimen/nomal_padding"
+                android:tag="hospital"
+                android:id="@+id/hospital">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -340,7 +357,9 @@
                 android:background="@drawable/home_button_border"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="@dimen/nomal_padding">
+                android:padding="@dimen/nomal_padding"
+                android:tag="photostudio"
+                android:id="@+id/photostudio">
 
                 <ImageView
                     android:layout_width="wrap_content"

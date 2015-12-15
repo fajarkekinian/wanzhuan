@@ -32,6 +32,10 @@
             android:name=".UserActivity"
             android:label="@string/title_activity_user" >
         </activity>
+        <activity
+            android:name=".LocalPoiActivity"
+            android:label="@string/title_activity_local_poi" >
+        </activity>
     </application>
 
 </manifest>
