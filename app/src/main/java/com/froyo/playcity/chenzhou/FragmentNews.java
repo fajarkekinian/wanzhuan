@@ -2,29 +2,31 @@ package com.froyo.playcity.chenzhou;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.froyo.playcity.chenzhou.api.Api;
-import com.froyo.playcity.chenzhou.bean.Act;
+
 import com.froyo.playcity.chenzhou.bean.Banner;
 import com.froyo.playcity.chenzhou.bean.News;
 import com.froyo.view.CommonAdapter;
 import com.froyo.view.CustomerViewPage;
+import com.froyo.view.MyPullRefreshView;
 import com.froyo.view.ViewHolder;
 import com.squareup.picasso.Picasso;
+import com.yalantis.phoenix.PullToRefreshView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,9 @@ public class FragmentNews extends Fragment {
 	@Bind(R.id.news)
 	ListView newsList;
 	@Bind(R.id.no_data) TextView emptyView;
+	@Bind(R.id.refresh)
+	MyPullRefreshView materialRefreshLayout;
+
 	private View view;
 	private View newsHeader;
 	private Context context;
@@ -46,9 +51,11 @@ public class FragmentNews extends Fragment {
 	CustomerViewPage viewPage;
 	private CommonAdapter<News> mAdapter;
 	private List<News> mDatas = new ArrayList<News>();
+	private List<News> mGetDatas = new ArrayList<News>();
 	private Api api;
 	private MaterialDialog mMaterialDialog;
 	private int netWork = 0;
+	int page;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -68,6 +75,7 @@ public class FragmentNews extends Fragment {
 		api = new Api();
 		newsList.addHeaderView(newsHeader);
 		mDatas = new ArrayList<News>();
+		mGetDatas = new ArrayList<News>();
 		mAdapter = new CommonAdapter<News>(context, mDatas, R.layout.news_item){
 
 			@Override
@@ -81,9 +89,50 @@ public class FragmentNews extends Fragment {
 		newsList.setEmptyView(emptyView);
 		bindAction();
 		showToast();
-		initSlideData();
+		setListAction();
+		getSlideData();
+		getListData();
+	}
 
-		setListData();
+	private void setListAction()
+	{
+		//添加上拉加载更多
+		newsList.setOnScrollListener(new AbsListView.OnScrollListener() {
+			//AbsListView view 这个view对象就是listview
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+					if (view.getLastVisiblePosition() == view.getCount() - 1) {
+						getListData();
+					}
+				}
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+								 int visibleItemCount, int totalItemCount) {
+			}
+		});
+
+		//下拉刷新
+		materialRefreshLayout.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				materialRefreshLayout.postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						mDatas = new ArrayList<News>();
+						page = 0;
+						getListData();
+						Log.d("tag", "fresh data");
+
+					}
+				}, 30);
+			}
+		});
+
+		
+
 	}
 
 	private void bindAction()
@@ -100,12 +149,15 @@ public class FragmentNews extends Fragment {
 		});
 	}
 
-	private void initSlideData() {
+	private void getSlideData() {
 		netWork++;
 		api.getBanners(new Callback<List<Banner>>() {
 			@Override
 			public void onResponse(Response<List<Banner>> response) {
 				slideData = new ArrayList<>();
+				if(response.body() == null)
+					return;
+
 				for(Banner banner:response.body()){
 					RelativeLayout bannerLine =  (RelativeLayout)LayoutInflater.from(context).inflate(R.layout.banner_slides, null);
 					Picasso.with(context).load(banner.getImg().getUrl()).into((ImageView)bannerLine.findViewById(R.id.img));
@@ -142,6 +194,8 @@ public class FragmentNews extends Fragment {
 
 	private void closeToast()
 	{
+		materialRefreshLayout.setRefreshing(false);
+		materialRefreshLayout.setIsOnLoadingMore(false);
 		if(netWork>0)
 		{
 			return;
@@ -149,7 +203,7 @@ public class FragmentNews extends Fragment {
 
 		mMaterialDialog.dismiss();
 	}
-	private void setListData()
+	private void getListData()
 	{
 		netWork++;
 		api.getNews(new Callback<List<News>>() {
@@ -158,15 +212,19 @@ public class FragmentNews extends Fragment {
 			public void onResponse(Response<List<News>> response) {
 				List<News> news = response.body();
 				mDatas.addAll(news);
-				Log.d("tag", news.toString());
+				mGetDatas.addAll(news);
+				Log.d("tag","mget data");
 				mAdapter.notifyDataSetChanged();
 				netWork--;
+				page++;
 				closeToast();
 			}
 
 			@Override
 			public void onFailure(Throwable t) {
 				netWork--;
+				 mDatas = mGetDatas;
+				mAdapter.notifyDataSetChanged();
 				t.printStackTrace();
 				closeToast();
 			}
