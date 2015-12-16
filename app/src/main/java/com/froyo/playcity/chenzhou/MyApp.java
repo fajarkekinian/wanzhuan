@@ -10,6 +10,7 @@ import com.froyo.apicloud.ApiCloud;
 public class MyApp extends Application {
     private static final MyApp instance = new MyApp();
     private ApiCloud apiCloud;
+    public String _city = "chenzhou";
 
     /**
      * 此方法方便在那些没有context对象的类中使用

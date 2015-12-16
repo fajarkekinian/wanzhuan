@@ -20,10 +20,10 @@ import retrofit.http.Query;
  */
 public interface ApiService {
     @GET("/mcm/api/activity")
-    Call<List<Act>> Actlist(@Header("X-APICloud-AppId") String appId,@Header("X-APICloud-AppKey") String appKey);
+    Call<List<Act>> Actlist(@Header("X-APICloud-AppId") String appId,@Header("X-APICloud-AppKey") String appKey,@Query(value="filter",encoded = true ) String filter);
 
     @GET("/mcm/api/news")
-    Call<List<News>> Newslist(@Header("X-APICloud-AppId") String appId,@Header("X-APICloud-AppKey") String appKey);
+    Call<List<News>> Newslist(@Header("X-APICloud-AppId") String appId,@Header("X-APICloud-AppKey") String appKey,@Query(value="filter",encoded = true ) String filter);
 
     @GET("/mcm/api/news/{id}")
     Call<News> getNews(@Header("X-APICloud-AppId") String appId,@Header("X-APICloud-AppKey") String appKey,@Path("id") String id);
@@ -32,7 +32,7 @@ public interface ApiService {
     Call<Act> getAct(@Header("X-APICloud-AppId") String appId,@Header("X-APICloud-AppKey") String appKey,@Path("id") String id);
 
     @GET("/mcm/api/banner")
-    Call<List<Banner>> getBanner(@Header("X-APICloud-AppId") String appId,@Header("X-APICloud-AppKey") String appKey);
+    Call<List<Banner>> getBanner(@Header("X-APICloud-AppId") String appId,@Header("X-APICloud-AppKey") String appKey,@Query(value="filter",encoded = true ) String filter);
     @GET("/mcm/api/local_server")
     Call<List<Pio>> getPios(@Header("X-APICloud-AppId") String appId,@Header("X-APICloud-AppKey") String appKey, @Query(value="filter",encoded = true ) String filter);
 }
