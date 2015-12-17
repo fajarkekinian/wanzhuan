@@ -92,7 +92,9 @@ public class FragmentNews extends MyBaseFragment {
 
 				for (Banner banner : response.body()) {
 					RelativeLayout bannerLine = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.banner_slides, null);
-					Picasso.with(context).load(banner.getImg().getUrl()).into((ImageView) bannerLine.findViewById(R.id.img));
+					if(banner.getImg() != null) {
+						Picasso.with(context).load(banner.getImg().getUrl()).into((ImageView) bannerLine.findViewById(R.id.img));
+					}
 					((TextView) bannerLine.findViewById(R.id.name)).setText(banner.getName());
 					slideData.add(bannerLine);
 				}

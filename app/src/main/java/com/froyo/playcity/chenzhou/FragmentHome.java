@@ -65,12 +65,10 @@ public class FragmentHome extends MyBaseFragment{
             public void onResponse(Response<List<Act>> response) {
 
                 List<Act> acts = response.body();
-                if(acts == null)
-                {
+                if (acts == null) {
                     return;
                 }
-                if(page == 0)
-                {
+                if (page == 0) {
                     mDatas.clear();
                 }
                 mDatas.addAll(acts);
@@ -83,7 +81,7 @@ public class FragmentHome extends MyBaseFragment{
                 t.printStackTrace();
                 afterNetwork();
             }
-        },page,20);
+        }, page, 20);
     }
 
     @Override
@@ -95,7 +93,11 @@ public class FragmentHome extends MyBaseFragment{
                 slideData = new ArrayList<>();
                 for (Banner banner : response.body()) {
                     RelativeLayout bannerLine = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.banner_slides, null);
-                    Picasso.with(context).load(banner.getImg().getUrl()).into((ImageView) bannerLine.findViewById(R.id.img));
+                    if(banner.getImg() != null)
+                    {
+                        Picasso.with(context).load(banner.getImg().getUrl()).into((ImageView) bannerLine.findViewById(R.id.img));
+                    }
+
                     ((TextView) bannerLine.findViewById(R.id.name)).setText(banner.getName());
                     slideData.add(bannerLine);
                 }
@@ -115,7 +117,7 @@ public class FragmentHome extends MyBaseFragment{
         },0,5);
     }
 
-    private void bindAction() {
+    protected void bindAction() {
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
