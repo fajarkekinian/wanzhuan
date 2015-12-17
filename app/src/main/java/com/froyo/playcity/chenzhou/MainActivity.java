@@ -3,14 +3,14 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 /**
  *
@@ -27,7 +27,7 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 
     private Class []fragClass = { FragmentHome.class,
             FragmentNews.class, FragmentLife.class, FragmentActivity.class,
-            FragmentUser.class };
+            FragmentAbout.class };
 
 
     private int mImageViewArray[] = { R.drawable.main_tab_item_home,
@@ -47,8 +47,15 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
                 res.getString(R.string.tab_news),
                 res.getString(R.string.tab_life),
                 res.getString(R.string.tab_activity),
-                res.getString(R.string.tab_user) };
+                res.getString(R.string.tab_about) };
+        addAutoUpdate();
         initView();
+    }
+
+    private void addAutoUpdate()
+    {
+        UmengUpdateAgent.setDefault();
+        UmengUpdateAgent.update(this);
     }
 
     private void initView() {
@@ -59,7 +66,7 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         mTabHost.getTabWidget().setDividerDrawable(android.R.color.transparent);//remove divider
 
-        int count = fragClass.length;
+        final int count = fragClass.length;
 
         for (int i = 0; i < count; i++) {
 
@@ -70,6 +77,24 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 
         }
 
+
+//        mTabHost.getTabWidget().getChildTabViewAt(count-1).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(false)
+//                {
+//                    mTabHost.setCurrentTab(count-1);
+//                    mTabHost.getTabWidget().requestFocus(View.FOCUS_FORWARD);
+//                }
+//                else
+//                {
+//                    Toast.makeText(MainActivity.this, "点击了Button", Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent();
+//                    intent.setClass(context,LoginActivity.class);
+//                    startActivity(intent);
+//                }
+//            }
+//        });
     }
 
     private View getTabItemView(int index) {
@@ -82,5 +107,14 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
         textView.setText(mTextviewArray[index]);
 
         return view;
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);       //统计时长
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

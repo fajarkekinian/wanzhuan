@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import java.util.HashMap;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -81,7 +83,7 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		@Override
 		public void onClick(View view) {
 			Intent intent = new Intent();
-			intent.setClass(context,LocalPoiActivity.class);
+			intent.setClass(context, LocalPoiActivity.class);
 			intent.putExtra("type", view.getTag().toString());
 			startActivity(intent);
 		}

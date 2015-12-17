@@ -1,6 +1,8 @@
 package com.froyo.playcity.chenzhou;
 
 import android.app.Application;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 
 import com.froyo.apicloud.ApiCloud;
 
@@ -29,4 +31,6 @@ public class MyApp extends Application {
         }
         return apiCloud;
     }
+
+
 }

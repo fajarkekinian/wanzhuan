@@ -23,6 +23,7 @@ import com.froyo.view.CustomerViewPage;
 import com.froyo.view.MyPullRefreshView;
 import com.froyo.view.ViewHolder;
 import com.squareup.picasso.Picasso;
+import com.umeng.analytics.MobclickAgent;
 import com.yalantis.phoenix.PullToRefreshView;
 
 import java.util.ArrayList;
@@ -122,6 +123,7 @@ public abstract class MyBaseFragment extends android.support.v4.app.Fragment {
                     }
                 }
             }
+
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem,
                                  int visibleItemCount, int totalItemCount) {
@@ -171,7 +173,14 @@ public abstract class MyBaseFragment extends android.support.v4.app.Fragment {
         mMaterialDialog.dismiss();
     }
 
-
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(this.getClass().getName()); //统计页面
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(this.getClass().getName());
+    }
 
 
 }

@@ -141,7 +141,7 @@ public class FragmentNews extends MyBaseFragment {
 				t.printStackTrace();
 				afterNetwork();
 			}
-		},page,20);
+		},page,20,"publisTime desc");
 	}
 
 }

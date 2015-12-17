@@ -11,6 +11,7 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.froyo.UmengActivity;
 import com.froyo.playcity.chenzhou.api.Api;
 import com.froyo.playcity.chenzhou.bean.Act;
 import com.froyo.playcity.chenzhou.bean.News;
@@ -24,7 +25,7 @@ import retrofit.Response;
 /**
  * Created by Administrator on 2015/12/3.
  */
-public class ActActivity extends Activity {
+public class ActActivity extends UmengActivity {
     @Bind(R.id.name)
     TextView name;
 

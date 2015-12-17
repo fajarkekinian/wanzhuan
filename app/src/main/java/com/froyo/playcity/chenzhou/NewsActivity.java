@@ -21,7 +21,7 @@ import retrofit.Response;
 /**
  * Created by Administrator on 2015/12/3.
  */
-public class NewsActivity extends Activity {
+public class NewsActivity extends UserActivity {
     @Bind(R.id.title)
     TextView title;
 

@@ -24,6 +24,7 @@ import retrofit.Retrofit;
 public class Api {
     private int pageSize = 5;
     private int page = 0;
+    private String orderBy = "createAt desc";
 
     private String  getFilter(JSONObject where)
     {
@@ -37,6 +38,7 @@ public class Api {
             filter.put("where",where);
             filter.put("skip",pageSize*page);
             filter.put("limit",pageSize);
+            filter.put("order",orderBy);
             try {
                 return URLEncoder.encode(filter.toString(),"UTF-8");
             } catch (UnsupportedEncodingException e) {
@@ -68,9 +70,18 @@ public class Api {
     {
         this.page = page;
         this.pageSize = pageSize;
+        Call<List<News>> call  = apiService.Newslist(header[0], header[1], getFilter(null));
+        call.enqueue(apiListern);
+    }
+    public void getNews(Callback<List<News>> apiListern,int page, int pageSize,String order)
+    {
+        this.page = page;
+        this.pageSize = pageSize;
+        this.orderBy = order;
         Call<List<News>> call  = apiService.Newslist(header[0], header[1],getFilter(null));
         call.enqueue(apiListern);
     }
+
 
     public void getNewsItem(String id, Callback<News> apiListern)
     {
@@ -90,26 +101,11 @@ public class Api {
         call.enqueue(apiListern);
     }
 
-    public void getPios( String type, Callback<List<Pio>> apiListern)
+    public void getPios( JSONObject where,int page,int pageSize, Callback<List<Pio>> apiListern)
     {
-
-
-            JSONObject filter = new JSONObject();
-            JSONObject where = new JSONObject();
-        try {
-            where.put("dataType",type);
-            filter.put("where",where);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-
-        String filterStr = null;
-        try {
-            filterStr = URLEncoder.encode(filter.toString(), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        this.page = page;
+        this.pageSize = pageSize;
+        String filterStr = getFilter(where);
         Call<List<Pio>> call  = apiService.getPios(header[0], header[1],filterStr );
             call.enqueue(apiListern);
 
