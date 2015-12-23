@@ -25,6 +25,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
     <!-- Update Activitys Start -->
+
     <activity
         android:name="com.umeng.update.UpdateDialogActivity"
         android:theme="@android:style/Theme.Translucent.NoTitleBar" >
@@ -49,8 +50,9 @@
             android:label="@string/news" >
         </activity>
         <activity
+
             android:name=".ActActivity"
-            android:label="@string/news" >
+            android:label="@string/tab_activity" >
         </activity>
         <activity
             android:name=".UserActivity"

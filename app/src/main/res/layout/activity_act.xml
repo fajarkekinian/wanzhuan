@@ -40,6 +40,7 @@
                         android:text="act"
                         />
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_centerInParent="true"
                         android:paddingLeft="@dimen/nomal_padding"
                         android:paddingRight="@dimen/nomal_padding"
@@ -104,6 +105,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/title_bar_padding"
+
         android:paddingTop="@dimen/title_bar_padding">
         <ImageView
             android:paddingLeft="@dimen/nomal_padding"
@@ -112,13 +114,14 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/arr_l"
             android:id="@+id/back"
+
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
-            android:text="@string/news"
+            android:text="@string/tab_activity"
             android:textColor="@color/white"
             android:textSize="@dimen/title_font_size" />
         <TextView
@@ -126,6 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/nomal_padding"
+            android:id="@+id/share"
             android:text="@string/share"
             />
     </RelativeLayout>

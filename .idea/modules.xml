@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ChenZhou.iml" filepath="$PROJECT_DIR$/ChenZhou.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Chenzhou.iml" filepath="$PROJECT_DIR$/Chenzhou.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/umenupdate/umenupdate.iml" filepath="$PROJECT_DIR$/umenupdate/umenupdate.iml" />
     </modules>
