@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <ScrollView
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/scroll_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,15 +10,52 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+                <RelativeLayout
 
+                    android:layout_alignParentTop="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/title_bar_padding"
+                    android:background="@color/lightblue"
+                    android:id="@+id/header"
+                    android:paddingTop="@dimen/title_bar_padding">
+                    <ImageView
+                        android:paddingLeft="@dimen/nomal_padding"
+                        android:paddingRight="@dimen/nomal_padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/arr_l"
+                        android:id="@+id/back"
+
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerInParent="true"
+                        android:text="@string/tab_activity"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/title_font_size" />
+                    <TextView
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/nomal_padding"
+                        android:textColor="@color/white"
+                        android:id="@+id/share"
+                        android:text="@string/share"
+                        />
+                </RelativeLayout>
             <ImageView
+                android:layout_below="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/img"
                 android:src="@drawable/ttt"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
-                android:layout_alignParentTop="true" />
+                 />
                 <RelativeLayout
                     android:layout_alignBottom="@+id/img"
                     android:layout_alignTop="@+id/img"
@@ -72,6 +106,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
+                        android:layout_marginTop="@dimen/nomal_padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/summery"
+                        android:text=""
+                        />
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/date"
@@ -99,38 +140,6 @@
 
 
             </RelativeLayout>
-    </ScrollView>
-    <RelativeLayout
-        android:layout_alignParentTop="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/title_bar_padding"
 
-        android:paddingTop="@dimen/title_bar_padding">
-        <ImageView
-            android:paddingLeft="@dimen/nomal_padding"
-            android:paddingRight="@dimen/nomal_padding"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/arr_l"
-            android:id="@+id/back"
 
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"
-            android:text="@string/tab_activity"
-            android:textColor="@color/white"
-            android:textSize="@dimen/title_font_size" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/nomal_padding"
-            android:id="@+id/share"
-            android:text="@string/share"
-            />
-    </RelativeLayout>
-</RelativeLayout>
+</ScrollView>

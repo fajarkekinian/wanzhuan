@@ -1,6 +1,6 @@
 package com.froyo.playcity.chenzhou;
 
-import android.app.Activity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.froyo.UmengActivity;
 import com.froyo.playcity.chenzhou.api.Api;
 import com.froyo.playcity.chenzhou.bean.News;
 
@@ -21,7 +22,7 @@ import retrofit.Response;
 /**
  * Created by Administrator on 2015/12/3.
  */
-public class NewsActivity extends UserActivity {
+public class NewsActivity extends UmengActivity {
     @Bind(R.id.title)
     TextView title;
 

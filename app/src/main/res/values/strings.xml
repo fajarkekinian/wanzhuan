@@ -54,6 +54,11 @@
     <string name="about_team_tips">关于团队</string>
     <string name="share_str">我在使用玩转郴州app</string>
 
+    <string name="title_activity_start">StartActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="power">By Allow 出品</string>
+
 
 
 </resources>

@@ -78,23 +78,7 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
         }
 
 
-//        mTabHost.getTabWidget().getChildTabViewAt(count-1).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(false)
-//                {
-//                    mTabHost.setCurrentTab(count-1);
-//                    mTabHost.getTabWidget().requestFocus(View.FOCUS_FORWARD);
-//                }
-//                else
-//                {
-//                    Toast.makeText(MainActivity.this, "点击了Button", Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent();
-//                    intent.setClass(context,LoginActivity.class);
-//                    startActivity(intent);
-//                }
-//            }
-//        });
+
     }
 
     private View getTabItemView(int index) {

@@ -2,6 +2,7 @@ package com.froyo.playcity.chenzhou;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -43,6 +45,7 @@ public class FragmentActivity extends MyBaseFragment {
     void prepare() {
         viewHeader = LayoutInflater.from(context).inflate(R.layout.activity_header, null);
         viewPage = (CustomerViewPage) viewHeader.findViewById(R.id.adslide);
+        bindAction();
     }
 
     @Override
@@ -100,13 +103,11 @@ public class FragmentActivity extends MyBaseFragment {
             public void onResponse(Response<List<Act>> response) {
 
                 List<Act> acts = response.body();
-                if(acts == null)
-                {
+                if (acts == null) {
                     return;
 
                 }
-                if(page == 0)
-                {
+                if (page == 0) {
                     mDatas.clear();
                 }
                 mDatas.addAll(acts);
@@ -120,10 +121,21 @@ public class FragmentActivity extends MyBaseFragment {
                 t.printStackTrace();
                 afterNetwork();
             }
-        },page,20);
+        }, page, 20);
 
     }
 
-
+    protected void bindAction() {
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Act act = (Act) mDatas.get(i - 1);
+                Intent intent = new Intent();
+                intent.setClass(context, ActActivity.class);
+                intent.putExtra("id", act.getId());
+                context.startActivity(intent);
+            }
+        });
+    }
 
 }

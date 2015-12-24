@@ -16,12 +16,18 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.froyo.UmengActivity;
 import com.froyo.playcity.chenzhou.api.Api;
 import com.froyo.playcity.chenzhou.bean.Act;
-import com.froyo.playcity.chenzhou.bean.News;
 import com.squareup.picasso.Picasso;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,6 +36,7 @@ import java.io.IOException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
 import me.drakeet.materialdialog.MaterialDialog;
 import retrofit.Callback;
 import retrofit.Response;
@@ -54,6 +61,9 @@ public class ActActivity extends UmengActivity {
 
     @Bind(R.id.share)
     TextView share;
+    @Bind(R.id.summery)
+    TextView summery;
+
     @Bind(R.id.img)
     ImageView img;
 
@@ -63,6 +73,7 @@ public class ActActivity extends UmengActivity {
     private Context context;
 
     private MaterialDialog mMaterialDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,53 +98,13 @@ public class ActActivity extends UmengActivity {
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (act != null) {
-
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    if (act.getImg() != null) {
-
-
-                        String path= Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator+"share.jpg";
-                        Uri uri=Uri.parse("file:///"+path);
-                        intent.putExtra(Intent.EXTRA_STREAM, uri);  //传输图片或者文件 采用流的方式
-
-                        intent.setType("image/*");   //分享图片
-                    }
-
-//                    intent.setType("text/plain"); // 分享发送的数据类型
-
-                    String subj = getResources().getString(R.string.share_str) + "\n" +getResources().getString(R.string.tab_activity)+"--"+ act.getTitle();
-                    intent.putExtra("Kdescription", subj);
-                    intent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.app_name) + "--" + getResources().getString(R.string.tab_activity) + "--" + act.getSummary());   //附带的说明信息
-                    intent.putExtra(Intent.EXTRA_SUBJECT,subj );
-                    startActivity(Intent.createChooser(intent, getResources().getString(R.string.share)));
-                }
+                showShare();
             }
         });
     }
 
-        public void saveBitmap(Bitmap bm) {
-            File f = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator, "share.jpg");
-            if (f.exists()) {
-                f.delete();
-            }
-            try {
-                FileOutputStream out = null;
-                try {
-                    out = new FileOutputStream(f);
-                    bm.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                    out.flush();
-                    out.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+
+
 
     private void getData(){
         showToast();
@@ -156,6 +127,60 @@ public class ActActivity extends UmengActivity {
         });
     }
 
+    private void showShare()
+    {
+//        PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
+        PlatformConfig.setSinaWeibo("3581140788", "12f186f2a656a4b284d3e78be982755e");
+        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+        if(act == null)
+        {
+            Toast.makeText(context,"娌℃湁鏁版嵁",Toast.LENGTH_LONG).show();
+        }
+        else {
+            final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
+                    {
+//                            SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,
+                            SHARE_MEDIA.SINA,
+                            SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.EMAIL
+                    };
+            String title = act.getAddress() + "-" + act.getTitle() + "姝ｅ湪杩涜" + act.getSummary() + "娲诲姩--" + getResources().getString(R.string.share_str);
+            ShareAction shareAction =  new ShareAction(this).setDisplayList(displaylist)
+                    .withText(title)
+                    .setCallback(shareListener);
+            if(act.getImg() != null)
+            {
+                String img = act.getImg();
+                UMImage umimg = new UMImage(context, img);
+                shareAction.withMedia(umimg);
+            }
+            else
+            {
+                UMImage umicon = new UMImage(context, R.mipmap.icon_app);
+                shareAction.withMedia(umicon);
+            }
+
+            shareAction.open();
+
+
+        }
+    }
+
+    private UMShareListener shareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA share_media) {
+
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA share_media) {
+
+        }
+    };
     private void setData(){
         name.setText(act.getTitle());
         if(act.getImg() !=null)
@@ -185,6 +210,7 @@ public class ActActivity extends UmengActivity {
                 "    </style>"+act.getIntro()+"</body>";
         content.loadDataWithBaseURL("", text, mimeType, encoding, "");
         address.setText(act.getAddress());
+        summery.setText(act.getTitle()+"-"+act.getSummary());
     }
 
     private void showToast()

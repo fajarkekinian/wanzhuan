@@ -23,18 +23,30 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+    }
+    sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/anim'] } }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+    //code reject to easy bind ui item
+
+
+    compile project(':umenupdate')
+    compile project(':umenshare')
+
     compile 'me.drakeet.materialdialog:library:1.2.8'
     compile 'com.android.support:appcompat-v7:22.2.0'
-    compile 'com.jakewharton:butterknife:7.0.1'//code reject to easy bind ui item
+    compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.retrofit:retrofit:2.0.0-beta1'
     compile 'com.squareup.retrofit:converter-gson:2.0.0-beta1'
     compile 'com.yalantis:phoenix:1.2.3'
-
     compile 'com.umeng.analytics:analytics:latest.integration'
-    compile project(':umenupdate')
+
+
 }
+
+
