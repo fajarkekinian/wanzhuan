@@ -2,15 +2,24 @@ package com.froyo.playcity.chenzhou;
 
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+
 import android.os.Environment;
+import android.os.Parcelable;
 import android.text.Html;
-import android.util.Log;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
@@ -18,21 +27,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.froyo.UmengActivity;
 import com.froyo.playcity.chenzhou.api.Api;
 import com.froyo.playcity.chenzhou.bean.Act;
+
 import com.squareup.picasso.Picasso;
-import com.umeng.socialize.PlatformConfig;
-import com.umeng.socialize.ShareAction;
-import com.umeng.socialize.UMShareListener;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.media.UMImage;
 
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -129,58 +136,75 @@ public class ActActivity extends UmengActivity {
 
     private void showShare()
     {
-//        PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
-        PlatformConfig.setSinaWeibo("3581140788", "12f186f2a656a4b284d3e78be982755e");
-        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
-        if(act == null)
-        {
-            Toast.makeText(context,"没有数据",Toast.LENGTH_LONG).show();
-        }
-        else {
-            final SHARE_MEDIA[] displaylist = new SHARE_MEDIA[]
-                    {
-//                            SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE,
-                            SHARE_MEDIA.SINA,
-                            SHARE_MEDIA.QQ, SHARE_MEDIA.QZONE, SHARE_MEDIA.EMAIL
-                    };
-            String title = act.getAddress() + "-" + act.getTitle() + "正在进行" + act.getSummary() + "活动--" + getResources().getString(R.string.share_str);
-            ShareAction shareAction =  new ShareAction(this).setDisplayList(displaylist)
-                    .withText(title)
-                    .setCallback(shareListener);
-            if(act.getImg() != null)
-            {
-                String img = act.getImg();
-                UMImage umimg = new UMImage(context, img);
-                shareAction.withMedia(umimg);
+
+        String subj = act.getAddress() + "-" + act.getTitle() + "正在进行" + act.getSummary() + "活动--" + getResources().getString(R.string.share_str)+"\n"+"http://www.aiaiaini.com/fronted/post/view?id=4";
+
+
+
+
+        Intent it = new Intent(Intent.ACTION_SEND);
+        it.setType("image/*");
+        Uri imageUri = getLocalBitmapUri(img);
+        List<ResolveInfo> resInfo = getPackageManager().queryIntentActivities(it, 0);
+        String[] packages = new String[]{"com.sina.weibo"};
+        if (!resInfo.isEmpty()) {
+            List<Intent> targetedShareIntents = new ArrayList<Intent>();
+            for (String pk : packages) {
+                Intent targeted = new Intent(Intent.ACTION_SEND);
+                targeted.setType("image/*");
+                targeted.putExtra("Kdescription", subj);
+                targeted.putExtra(Intent.EXTRA_STREAM, imageUri);
+                targeted.putExtra(Intent.EXTRA_TEXT, subj);
+                targeted.putExtra("url","http://www.aiaiaini.com/fronted/post/view?id=4");
+                targeted.setPackage(pk);
+                targetedShareIntents.add(targeted);
             }
-            else
-            {
-                UMImage umicon = new UMImage(context, R.mipmap.icon_app);
-                shareAction.withMedia(umicon);
+            Intent chooserIntent = Intent.createChooser(targetedShareIntents.remove(0), "Select app to share");
+            if (chooserIntent == null) {
+                return;
             }
-
-            shareAction.open();
-
-
+            // A Parcelable[] of Intent or LabeledIntent objects as set with
+            // putExtra(String, Parcelable[]) of additional activities to place
+            // a the front of the list of choices, when shown to the user with a
+            // ACTION_CHOOSER.
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetedShareIntents.toArray(new Parcelable[] {}));
+            try {
+                startActivity(chooserIntent);
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(this, "Can't find share component to share", Toast.LENGTH_SHORT).show();
+            }
         }
+
     }
 
-    private UMShareListener shareListener = new UMShareListener() {
-        @Override
-        public void onResult(SHARE_MEDIA share_media) {
 
+
+    public Uri getLocalBitmapUri(ImageView imageView) {
+        // Extract Bitmap from ImageView drawable
+        Drawable drawable = imageView.getDrawable();
+        Bitmap bmp = null;
+        if (drawable instanceof BitmapDrawable){
+            bmp = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        } else {
+            return null;
         }
-
-        @Override
-        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
-
+        // Store image to default external storage directory
+        Uri bmpUri = null;
+        try {
+            File file =  new File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DOWNLOADS), "share_image_" + System.currentTimeMillis() + ".png");
+            file.getParentFile().mkdirs();
+            FileOutputStream out = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.close();
+            bmpUri = Uri.fromFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return bmpUri;
+    }
 
-        @Override
-        public void onCancel(SHARE_MEDIA share_media) {
 
-        }
-    };
     private void setData(){
         name.setText(act.getTitle());
         if(act.getImg() !=null)
@@ -206,11 +230,12 @@ public class ActActivity extends UmengActivity {
                 "        .detail-title dd,.dd-padding dd{\n" +
                 "            margin-left: 0px;\n" +
                 "            padding-left: 0px;\n" +
-                "        }\n" +
-                "    </style>"+act.getIntro()+"</body>";
+                "        }\n";
+                if(act.getIntro()!=null)
+                text +="    </style>"+act.getIntro()+"</body>";
         content.loadDataWithBaseURL("", text, mimeType, encoding, "");
         address.setText(act.getAddress());
-        summery.setText(act.getTitle()+"-"+act.getSummary());
+        summery.setText(act.getTitle()+"\n"+act.getSummary());
     }
 
     private void showToast()

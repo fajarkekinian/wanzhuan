@@ -50,6 +50,9 @@ public class FragmentLife extends Fragment {
 	@Bind(R.id.photostudio)
 	LinearLayout photostudio;//医院
 
+	@Bind(R.id.pedicure)
+	LinearLayout pedicure;
+
 @Override
 public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		Bundle savedInstanceState) {
@@ -75,6 +78,7 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		photostudio.setOnClickListener(pioClick);
 		shop.setOnClickListener(pioClick);
 		hospital.setOnClickListener(pioClick);
+		pedicure.setOnClickListener(pioClick);
 
 
 	}

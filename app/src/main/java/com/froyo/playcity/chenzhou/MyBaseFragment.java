@@ -47,7 +47,8 @@ public abstract class MyBaseFragment extends android.support.v4.app.Fragment {
     TextView emptyView;
 
 
-    protected List<View> slideData;
+    protected List<View> slideViews;
+    protected ArrayList<Banner> slideDatas;
     protected List mDatas;
     protected View view;
     protected Context context;
@@ -87,7 +88,8 @@ public abstract class MyBaseFragment extends android.support.v4.app.Fragment {
         api = new Api();
 
         myList.addHeaderView(viewHeader);
-        mDatas = new ArrayList<Act>();
+        mDatas = new ArrayList<>();
+        slideDatas = new ArrayList<Banner>();
         initAdapter();
         myList.setAdapter(mAdapter);
         myList.setEmptyView(emptyView);

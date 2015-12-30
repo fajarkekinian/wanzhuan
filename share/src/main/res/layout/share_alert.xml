@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:id="@+id/pop_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:background="#fff"
+        android:weightSum="1"
+        >
+
+
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/btn_qq"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ssdk_oks_logo_qq"
+            android:scaleType="fitCenter"
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            />
+
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/btn_sinaweibo"
+            android:scaleType="fitCenter"
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+
+            android:layout_height="wrap_content"
+
+            android:src="@drawable/ssdk_oks_logo_sinaweibo"
+            android:textStyle="bold"
+            />
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/btn_wechatmoments"
+            android:scaleType="fitCenter"
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="wrap_content"
+
+            android:src="@drawable/ssdk_oks_logo_wechatmoments"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+
+            />
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/btn_wechat"
+            android:scaleType="fitCenter"
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ssdk_oks_logo_wechat"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+
+            />
+    </LinearLayout>
+</RelativeLayout>

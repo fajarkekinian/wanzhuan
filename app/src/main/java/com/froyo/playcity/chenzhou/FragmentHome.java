@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.froyo.playcity.chenzhou.bean.Act;
 import com.froyo.playcity.chenzhou.bean.Banner;
@@ -90,33 +91,58 @@ public class FragmentHome extends MyBaseFragment{
         api.getBanners(new Callback<List<Banner>>() {
             @Override
             public void onResponse(Response<List<Banner>> response) {
-                slideData = new ArrayList<>();
+                slideViews = new ArrayList<>();
                 for (Banner banner : response.body()) {
+
                     RelativeLayout bannerLine = (RelativeLayout) LayoutInflater.from(context).inflate(R.layout.banner_slides, null);
                     if(banner.getImg() != null)
                     {
-                        Picasso.with(context).load(banner.getImg().getUrl()).into((ImageView) bannerLine.findViewById(R.id.img));
+                        Picasso.with(context).load(banner.getImg()).into((ImageView) bannerLine.findViewById(R.id.img));
                     }
+                    slideDatas.add(banner);
+                    bannerLine.setTag(slideViews.size());
 
+                    bannerLine.setOnClickListener(slideClick);
                     ((TextView) bannerLine.findViewById(R.id.name)).setText(banner.getName());
-                    slideData.add(bannerLine);
+                    slideViews.add(bannerLine);
                 }
-                viewPage.setViewPageViews(slideData);
+                viewPage.setViewPageViews(slideViews);
                 afterNetwork();
             }
 
             @Override
             public void onFailure(Throwable t) {
                 netWork--;
-                slideData = new ArrayList<>();
+                slideViews = new ArrayList<>();
                 LinearLayout bannerLine = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.no_data, null);
-                slideData.add(bannerLine);
-                viewPage.setViewPageViews(slideData);
+                slideViews.add(bannerLine);
+                viewPage.setViewPageViews(slideViews);
 
             }
         },0,5);
     }
+    View.OnClickListener slideClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
 
+            Intent intent = new Intent();
+
+            Banner banner = (Banner)slideDatas.get(Integer.parseInt(v.getTag().toString()));
+            String model = banner.getModel();
+            if(model.equals("news"))
+            {
+                intent.setClass(context, NewsActivity.class);
+            }
+            else
+            {
+                intent.setClass(context,ActActivity.class);
+            }
+
+
+            intent.putExtra("id",banner.getModel_id());
+            context.startActivity(intent);
+        }
+    };
     protected void bindAction() {
         myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -128,5 +154,7 @@ public class FragmentHome extends MyBaseFragment{
                 context.startActivity(intent);
             }
         });
+
+
     }
 }

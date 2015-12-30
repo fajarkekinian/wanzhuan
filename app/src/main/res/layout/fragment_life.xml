@@ -210,6 +210,8 @@
                 android:background="@drawable/home_button_border"
                 android:gravity="center"
                 android:orientation="vertical"
+                android:id="@+id/pedicure"
+                android:tag="pedicure"
                 android:padding="@dimen/nomal_padding">
 
                 <ImageView

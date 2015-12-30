@@ -5,17 +5,24 @@ package com.froyo.playcity.chenzhou.bean;
  */
 public class Banner {
 
-    private String id;
-    private String name;
+
     /**
-     * url : http://a98a31053f8476f03aae.b0.upaiyun.com/apicloud/2930bee1ae195ed8d0f8f0d1f25a3cc7.jpg
-     * name : 228H.jpg
-     * id : 5660ff876e1e86e66968d207
+     * id : 567cb2d77453d4d55f867fc8
+     * name : 多少郴州人手机里有这张照片？看完我呆住了……
+     * model : news
+     * model_id : 567cb2d6afa3e8fa2a9c071c
+     * city : chenzhou
+     * img : http://easyread.ph.126.net/bXYtQVLmDUsPJ_zd0FLI6A==/7917088451385368883.gif
+     * createdAt : 2015-12-25T03:07:03.618Z
+     * updatedAt : 2015-12-25T03:07:03.618Z
      */
 
-    private ImgEntity img;
+    private String id;
+    private String name;
     private String model;
     private String model_id;
+    private String city;
+    private String img;
     private String createdAt;
     private String updatedAt;
 
@@ -27,16 +34,20 @@ public class Banner {
         this.name = name;
     }
 
-    public void setImg(ImgEntity img) {
-        this.img = img;
-    }
-
     public void setModel(String model) {
         this.model = model;
     }
 
     public void setModel_id(String model_id) {
         this.model_id = model_id;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public void setCreatedAt(String createdAt) {
@@ -55,10 +66,6 @@ public class Banner {
         return name;
     }
 
-    public ImgEntity getImg() {
-        return img;
-    }
-
     public String getModel() {
         return model;
     }
@@ -67,41 +74,19 @@ public class Banner {
         return model_id;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
     public String getCreatedAt() {
         return createdAt;
     }
 
     public String getUpdatedAt() {
         return updatedAt;
-    }
-
-    public static class ImgEntity {
-        private String url;
-        private String name;
-        private String id;
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getId() {
-            return id;
-        }
     }
 }

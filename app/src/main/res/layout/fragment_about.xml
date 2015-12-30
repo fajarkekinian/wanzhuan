@@ -41,6 +41,7 @@
 
     </LinearLayout>
 
+
     <LinearLayout
         android:layout_margin="@dimen/nomal_padding"
         android:padding="@dimen/nomal_padding"
@@ -50,7 +51,53 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/dev_blog_tips"
+            />
+        <TextView
+            android:autoLink="all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dev_blog"
+            android:text="@string/dev_blog"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_margin="@dimen/nomal_padding"
+        android:padding="@dimen/nomal_padding"
+        android:background="@drawable/write_radius"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/team_site_tips"
+            />
+        <TextView
+            android:autoLink="all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/team_site"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_margin="@dimen/nomal_padding"
+        android:padding="@dimen/nomal_padding"
+        android:background="@drawable/write_radius"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/about_team_tips"
+            android:drawableBottom="@drawable/bottom_line"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_team_info"
             />
 
 

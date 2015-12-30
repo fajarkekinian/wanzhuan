@@ -24,7 +24,7 @@ import retrofit.Retrofit;
 public class Api {
     private int pageSize = 5;
     private int page = 0;
-    private String orderBy = "createAt desc";
+    private String orderBy = "id DESC";
 
     private String  getFilter(JSONObject where)
     {
@@ -78,6 +78,7 @@ public class Api {
         this.page = page;
         this.pageSize = pageSize;
         this.orderBy = order;
+
         Call<List<News>> call  = apiService.Newslist(header[0], header[1],getFilter(null));
         call.enqueue(apiListern);
     }
@@ -97,10 +98,23 @@ public class Api {
 
     public void getBanners( Callback<List<Banner>> apiListern,int page, int pageSize)
     {
-        Call<List<Banner>> call  = apiService.getBanner(header[0], header[1],getFilter(null));
+        this.orderBy = "id DESC";
+        Call<List<Banner>> call  = apiService.getBanner(header[0], header[1], getFilter(null));
         call.enqueue(apiListern);
     }
 
+    public void getBanners( Callback<List<Banner>> apiListern,String model,int page, int pageSize)
+    {try {
+        JSONObject where = new JSONObject();
+
+            where.put("model", model);
+            this.orderBy = "id DESC";
+        Call<List<Banner>> call  = apiService.getBanner(header[0], header[1],getFilter(where));
+        call.enqueue(apiListern);
+    } catch (JSONException e) {
+        e.printStackTrace();
+    }
+    }
     public void getPios( JSONObject where,int page,int pageSize, Callback<List<Pio>> apiListern)
     {
         this.page = page;

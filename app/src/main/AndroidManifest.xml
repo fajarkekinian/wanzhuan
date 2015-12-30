@@ -67,10 +67,11 @@
             android:label="@string/title_activity_login" >
         </activity>
         <activity
+            android:theme="@android:style/Theme.Translucent"
             android:name=".StartActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_start"
-            android:theme="@style/FullscreenTheme" >
+
+             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

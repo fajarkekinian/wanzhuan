@@ -51,14 +51,20 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="about">关于</string>
     <string name="app_name_tips">版本:</string>
-    <string name="about_team_tips">关于团队</string>
+    <string name="about_team_tips">关于团队-悠然工坊</string>
     <string name="share_str">我在使用玩转郴州app</string>
 
     <string name="title_activity_start">StartActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="power">By Allow 出品</string>
-
-
+    <string name="power">悠然工坊出品</string>
+    <string name="about_team_info">站长，土生土长的郴州人，本可以靠学历偏偏走了靠苦力搬砖的码农之路,若是加上上学时的编码经历，算算已经好多年，学着电子专业却从了软件开发行业，写着网站后台，却又派去写安卓客户端....此处省略一万行泪水\n\n希望能为郴州本土企业提供互联网服务，如有需要，可以承接各类网站，app开发,需要请联系Allon! Q:1035308417</string>
+    <string name="dev_blog">http://froyot.github.io</string>
+    <string name="dev_blog_tips">开发者博客:</string>
+    <string name="team_site_tips">团队网站:</string>
+    <string name="team_site">http://www.aiaiaini.com</string>
+    <item type="id" name="tag_model"></item>
+    <item type="id" name="tag_model_id"></item>
+    <string name="setting_about_description">郴州人的本地资讯app</string>
 
 </resources>

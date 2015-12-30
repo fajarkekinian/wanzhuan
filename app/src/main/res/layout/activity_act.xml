@@ -71,7 +71,7 @@
                         android:textStyle="bold"
                         android:textSize="@dimen/large_font"
                         android:layout_marginLeft="@dimen/nomal_paddingx3"
-                        android:text="act"
+                        android:text=""
                         />
                     <LinearLayout
                         android:visibility="gone"
@@ -117,7 +117,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/date"
                         android:text=""
-                        android:drawableLeft="@mipmap/time"
+
                         />
                     <TextView
                         android:layout_marginTop="@dimen/nomal_padding"
